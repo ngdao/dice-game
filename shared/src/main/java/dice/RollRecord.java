@@ -25,6 +25,21 @@ public class RollRecord {
         this.score = score;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof RollRecord)) {
+            return false;
+        }
+
+        RollRecord that = (RollRecord) other;
+
+        return this.userId.equals(that.userId) &&
+            this.gameId == that.gameId &&
+            this.numDice == that.numDice &&
+            this.rollValue == that.rollValue &&
+            this.score == that.score;
+        }
+
     /**
      * Function to return the userId
      * @return string -> userId The players name in the game. Consists of three letters, usually the players initials.

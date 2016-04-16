@@ -6,8 +6,8 @@
 | 4  | 4        | Player       | I want to choose to not roll so that I can maintain my score before going over the score of 23.          | 0.5             | Week 2 |              | Done   |
 | 5  | 5        | Score Keeper | I want to set the score so that I can declare a win or loss when reaching or exceeding 23.               | 2               | Week 2 |              | Done   |
 | 6  | 6        | Score Keeper | I want to get the score so that I can provide the values to the current game and leaderboard.            | 1               | Week 2 | ID: 5        | Done   |
-| 7  | 7        | Player       | I want to type in my initials so I can be represented in the leader board.                               | 1               | Week 3 |              |        |
-| 8  | 8        | Player       | I want to view the leader board so that I can see mine and others' overall scores.                       | 2               | Week 3 | ID: 7        |        |
-| 9  | 9        | Player       | I want to view my personal statistics so that I can see my average number of rolls per turn.             | 2               | Week 3 | ID: 7        |        |
-| 10 | 10       | Player       | I want to view others' statistics so that I can compare my average number of rolls per turn with theirs. | 2               | Week 3 | ID: 7        |        |
-| 11 | 11       | Player       | I want to have a graphical user interface so that I can easily play the game.                            | 2               | Week 3 |              |        |
+| 7  | 7        | Player       | I want to type in my initials so I can be represented in the leader board.                               | 2               | Week 3 |              | Done   |
+| 8  | 8        | Player       | I want to have a graphical user interface so that I can easily play the game.                            | 5               | Week 3 |              | Done   |
+| 9  | 9        | Player       | I want to view the leader board so that I can see mine and others' overall scores.                       | 3               | Week 4 | ID: 7        |        |
+| 10 | 10       | Player       | I want to view my personal statistics so that I can see my average number of rolls per turn.             | 2               | Week 4 | ID: 7        |        |
+| 11 | 11       | Player       | I want to view others' statistics so that I can compare my average number of rolls per turn with theirs. | 2               | Week 4 | ID: 7        |        |

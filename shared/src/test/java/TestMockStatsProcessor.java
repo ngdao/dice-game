@@ -7,7 +7,7 @@ import dice.*;
 
 public class TestMockStatsProcessor {
 
-    private Database db = Database.create("mock");
+    private Database db = Database.create("mock", "dummyFilename");
     private StatsProcessor proc = StatsProcessor.create("mock", db);
 
     @Test

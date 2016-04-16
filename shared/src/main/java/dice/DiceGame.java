@@ -7,19 +7,33 @@ public class DiceGame {
     private Die die;
     private String username;
     private int currentTotal;
+    private int gameId;
+    private Database database;
 
-    private DiceGame(String username) {
+    private DiceGame(String username, Database database) {
         this.username = username;
         currentTotal = 0;
         die = new Die();
+        this.database = database;
+        this.gameId = -1;
     }
 
     public static DiceGame create(String username)
             throws InvalidUsernameException {
         validateUsername(username);
-        return new DiceGame(username);
+
+        Database db = Database.create("concrete", "threeTo23Database.csv");
+        return new DiceGame(username, db);
     }
 
+    public static DiceGame create(String username, Database database)
+            throws InvalidUsernameException {
+        validateUsername(username);
+
+        return new DiceGame(username, database);
+    }
+
+    // TODO: remove once GUI no longer needs
     public static DiceGame create() {
         DiceGame game;
         try {
@@ -49,6 +63,15 @@ public class DiceGame {
 
         currentTotal += result.sum();
 
+        if (gameId == -1) {
+            gameId = getNextGameId();
+        }
+
+        RollRecord record = new RollRecord(getUsername(), gameId, numDice,
+                                           result.sum(), getScore());
+
+        database.addRoll(record);
+
         return result;
     }
 
@@ -76,6 +99,19 @@ public class DiceGame {
 
     public String getUsername() {
         return username;
+    }
+
+    private int getNextGameId() {
+        RollRecord[] records = database.getAllRecords();
+
+        int maxId = -1;
+        for (RollRecord record : records) {
+            if (record.getGameId() > maxId) {
+                maxId = record.getGameId();
+            }
+        }
+
+        return maxId + 1;
     }
 
     private static void validateUsername(String username)

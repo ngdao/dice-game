@@ -40,7 +40,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die_face_5.png")));
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png")));
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die-a.gif")));
-        data = Database.create("mock");
+        data = Database.create("mock", "dummyPath");
         stat = StatsProcessor.create("mock",data);
 }
     
@@ -337,21 +337,22 @@ public class DiceGameGUI extends javax.swing.JFrame {
         }    }//GEN-LAST:event_btnStopActionPerformed
 
     private void btnRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollActionPerformed
-        int diceNumber = Integer.parseInt(txtDiceNumber.getText());
-        if (diceNumber > 3 || diceNumber <1 || txtDiceNumber.getText().equals("") )
-        {
-          JOptionPane.showMessageDialog(null, "Please enter a number from 1-3", "Invalid Input",
-          JOptionPane.OK_OPTION);
-        } 
+        String diceText = txtDiceNumber.getText();
+        
+        if (diceText.matches("[1-3]")) {
+            int diceNumber = Integer.parseInt(diceText);
+            enableDie(diceNumber);
+        
+            dieAnimation(diceNumber);
+           
+            txtDiceNumber.setEnabled(false);
+            btnStop.setEnabled(true);
+            btnRoll.setEnabled(false);
+        }
         else
         {
-         enableDie(diceNumber);
-        
-         dieAnimation(diceNumber);
-        
-         txtDiceNumber.setEnabled(false);
-         btnStop.setEnabled(true);
-         btnRoll.setEnabled(false);
+            JOptionPane.showMessageDialog(null, "Please enter a number from 1-3", "Invalid Input",
+            JOptionPane.OK_OPTION);
         }
     }//GEN-LAST:event_btnRollActionPerformed
 
@@ -367,18 +368,21 @@ public class DiceGameGUI extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        String name;
-       do{
-           name = JOptionPane.showInputDialog(null, "What is your name?").toUpperCase();
+       do {
+           name = JOptionPane.showInputDialog(null, "What are your initials (3-characters)?");
            if (name == null)
                System.exit(0);
-           if (name.length() != 3)
-               JOptionPane.showMessageDialog(null, "Invalid Input", "Invalid Input",
+           if (name.length() != 3 || !name.matches("[a-zA-Z]+"))
+               JOptionPane.showMessageDialog(null, "Invalid Input, must contain 3 alpha characters!", "Invalid Input",
                JOptionPane.OK_OPTION);
-       } while (name.length() == 0 || name.length() > 3);
+       } while (name.length() != 3 || !name.matches("[a-zA-Z]+"));
        
-       try{thisGame = DiceGame.create(name);}
-        catch(InvalidUsernameException ex) {ex.printStackTrace();}
-       
+       try {
+         thisGame = DiceGame.create(name);
+       } catch(InvalidUsernameException ex) {
+         ex.printStackTrace();
+       }
+
        lblPlayerName.setText(name);
     }//GEN-LAST:event_formWindowOpened
 
