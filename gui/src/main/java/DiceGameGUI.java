@@ -387,7 +387,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             "Goal of the game: \n"
             + "The goal of the game is to accumulate a total of exactly 23,"
             + " or get as close as you can without going over, by rolling\n"
-            + "1-3 dice an unlimited amount of times. You will have the"
+            + "1-3 dice an unlimited amount of times. You will have the "
             + "choice to use 1, 2, or 3 dice to increase your\n "
             + "overall total and achieve the goal of 23.\n"
             + "\n"
@@ -401,7 +401,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             +"4.The player will have the option to stop there and record "
             + "their score or they can roll again to increase their total.\n" 
             +"5.The player can roll as many times as they want, but as soon "
-            + "as their total score equals or exceeds 23, the game is over."
+            + "as their cumulative rolls equal or exceed 23, the game is over."
             ,"Instruction",JOptionPane.OK_OPTION,listIcon.get(5));
     }//GEN-LAST:event_btnInstrActionPerformed
 

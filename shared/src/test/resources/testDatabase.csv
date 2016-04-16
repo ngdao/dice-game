@@ -1,2 +1,2 @@
-userId, gameId, numDice, rollValue, rollsCount, totalScore
-TAP,0,2,10,2,18
+userId, gameId, numDice, rollValue, score
+TAP,0,2,10,10

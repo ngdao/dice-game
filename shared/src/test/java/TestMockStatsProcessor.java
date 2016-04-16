@@ -56,4 +56,16 @@ public class TestMockStatsProcessor {
         assertThat(stats.getAvgScore(), equalTo(17.2));
         assertThat(stats.getAvgNumDiceUsed(), equalTo(1.4));
     }
+
+    @Test
+    public void getLeaderboard() {
+        LeaderboardEntry[] entries = proc.getLeaderboard();
+        assertThat(entries.length, equalTo(3));
+        assertThat(entries[0].getPlayerName(), equalTo("TAP"));
+        assertThat(entries[1].getPlayerName(), equalTo("CCS"));
+        assertThat(entries[2].getPlayerName(), equalTo("AAA"));
+        assertThat(entries[0].getHighestScore(), equalTo(46));
+        assertThat(entries[1].getHighestScore(), equalTo(22));
+        assertThat(entries[2].getHighestScore(), equalTo(20));
+    }
 }

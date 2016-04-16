@@ -24,6 +24,7 @@ public abstract class StatsProcessor {
     public abstract String[] getPlayerList();
     public abstract StatsData getPlayerStats(String playerName);
     public abstract StatsData getAllStats();
+    public abstract LeaderboardEntry[] getLeaderboard();
 }
 
 
@@ -90,6 +91,15 @@ class MockStatsProcessor extends StatsProcessor {
             .build();
         return stats;
     }
+
+    public LeaderboardEntry[] getLeaderboard() {
+        LeaderboardEntry entryA = new LeaderboardEntry("TAP", 46);
+        LeaderboardEntry entryB = new LeaderboardEntry("CCS", 22);
+        LeaderboardEntry entryC = new LeaderboardEntry("AAA", 20);
+
+        LeaderboardEntry[] array = {entryA, entryB, entryC};
+        return array;
+    }
 }
 
 
@@ -132,5 +142,9 @@ class ConcreteStatsProcessor extends StatsProcessor {
     }
     public StatsData getAllStats() {
         return new StatsData.Builder().build();
+    }
+
+    public LeaderboardEntry[] getLeaderboard() {
+        return new LeaderboardEntry[1];
     }
 }
