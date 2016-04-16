@@ -1,4 +1,4 @@
-
+package main;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -40,7 +40,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die_face_5.png")));
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png")));
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die-a.gif")));
-        data = Database.create("mock", "dummyPath");
+        data = Database.create("mock");
         stat = StatsProcessor.create("mock",data);
 }
     
@@ -130,13 +130,13 @@ public class DiceGameGUI extends javax.swing.JFrame {
         lblPlayerName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPlayerName.setText("Player's Name");
 
-        picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/die_face_6.png"))); // NOI18N
         picDie1.setEnabled(false);
 
-        picDie2.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/die_face_6.png"))); // NOI18N
         picDie2.setEnabled(false);
 
-        picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/die_face_6.png"))); // NOI18N
         picDie3.setEnabled(false);
 
         btnReset.setText("RESET");
@@ -337,22 +337,21 @@ public class DiceGameGUI extends javax.swing.JFrame {
         }    }//GEN-LAST:event_btnStopActionPerformed
 
     private void btnRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollActionPerformed
-        String diceText = txtDiceNumber.getText();
-        
-        if (diceText.matches("[1-3]")) {
-            int diceNumber = Integer.parseInt(diceText);
-            enableDie(diceNumber);
-        
-            dieAnimation(diceNumber);
-           
-            txtDiceNumber.setEnabled(false);
-            btnStop.setEnabled(true);
-            btnRoll.setEnabled(false);
-        }
+        int diceNumber = Integer.parseInt(txtDiceNumber.getText());
+        if (diceNumber > 3 || diceNumber <1 || txtDiceNumber.getText().equals("") )
+        {
+          JOptionPane.showMessageDialog(null, "Please enter a number from 1-3", "Invalid Input",
+          JOptionPane.OK_OPTION);
+        } 
         else
         {
-            JOptionPane.showMessageDialog(null, "Please enter a number from 1-3", "Invalid Input",
-            JOptionPane.OK_OPTION);
+         enableDie(diceNumber);
+        
+         dieAnimation(diceNumber);
+        
+         txtDiceNumber.setEnabled(false);
+         btnStop.setEnabled(true);
+         btnRoll.setEnabled(false);
         }
     }//GEN-LAST:event_btnRollActionPerformed
 
@@ -368,21 +367,18 @@ public class DiceGameGUI extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        String name;
-       do {
-           name = JOptionPane.showInputDialog(null, "What are your initials (3-characters)?");
+       do{
+           name = JOptionPane.showInputDialog(null, "What is your name?").toUpperCase();
            if (name == null)
                System.exit(0);
-           if (name.length() != 3 || !name.matches("[a-zA-Z]+"))
-               JOptionPane.showMessageDialog(null, "Invalid Input, must contain 3 alpha characters!", "Invalid Input",
+           if (name.length() != 3)
+               JOptionPane.showMessageDialog(null, "Invalid Input", "Invalid Input",
                JOptionPane.OK_OPTION);
-       } while (name.length() != 3 || !name.matches("[a-zA-Z]+"));
+       } while (name.length() == 0 || name.length() > 3);
        
-       try {
-         thisGame = DiceGame.create(name);
-       } catch(InvalidUsernameException ex) {
-         ex.printStackTrace();
-       }
-
+       try{thisGame = DiceGame.create(name);}
+        catch(InvalidUsernameException ex) {ex.printStackTrace();}
+       
        lblPlayerName.setText(name);
     }//GEN-LAST:event_formWindowOpened
 
@@ -391,7 +387,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             "Goal of the game: \n"
             + "The goal of the game is to accumulate a total of exactly 23,"
             + " or get as close as you can without going over, by rolling\n"
-            + "1-3 dice an unlimited amount of times. You will have the "
+            + "1-3 dice an unlimited amount of times. You will have the"
             + "choice to use 1, 2, or 3 dice to increase your\n "
             + "overall total and achieve the goal of 23.\n"
             + "\n"
@@ -405,7 +401,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             +"4.The player will have the option to stop there and record "
             + "their score or they can roll again to increase their total.\n" 
             +"5.The player can roll as many times as they want, but as soon "
-            + "as their cumulative rolls equal or exceed 23, the game is over."
+            + "as their total score equals or exceeds 23, the game is over."
             ,"Instruction",JOptionPane.OK_OPTION,listIcon.get(5));
     }//GEN-LAST:event_btnInstrActionPerformed
 
