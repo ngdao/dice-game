@@ -137,7 +137,8 @@ class ConcreteStatsProcessor extends StatsProcessor {
         RollRecord[] records = database.getRecordsForUser(playerName);
 
         if (records.length >= 1) {
-            computeStats(records);
+            StatsData returnedStats = computeStats(records);
+            return returnedStats;
         } else {
             return new StatsData.Builder().build();
         }
@@ -145,7 +146,8 @@ class ConcreteStatsProcessor extends StatsProcessor {
 
     public StatsData getAllStats() {
         RollRecord[] records = database.getAllRecords();
-        computeStats(records);
+        StatsData returnedStats = computeStats(records);
+        return returnedStats;
     }
 
     private StatsData computeStats(RollRecord[] records) {
