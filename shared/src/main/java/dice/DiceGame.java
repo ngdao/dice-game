@@ -33,19 +33,6 @@ public class DiceGame {
         return new DiceGame(username, database);
     }
 
-    // TODO: remove once GUI no longer needs
-    public static DiceGame create() {
-        DiceGame game;
-        try {
-            game = create("XXX");
-        }
-        catch (InvalidUsernameException e) {
-            game = null;
-        }
-
-        return game;
-    }
-
     public RollResult roll(int numDice) throws RollAfterGameOverException {
 
         if (getCurrentTotal() >= MAX_TOTAL) {

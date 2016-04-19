@@ -18,7 +18,7 @@ public abstract class StatsProcessor {
 
     public static StatsProcessor create() {
         Database db = Database.create();
-        return create("mock", db);
+        return create("concrete", db);
     }
 
     public abstract String[] getPlayerList();
@@ -167,9 +167,9 @@ class ConcreteStatsProcessor extends StatsProcessor {
             totalDiceUsed += record.getNumDice();
         }
 
-        avgNumDiceUsed = totalDiceUsed / dbLength;
+        avgNumDiceUsed = (double)totalDiceUsed / (double)dbLength;
         totalGames = totalGames + 1;
-        avgRolls = totalRolls / totalGames;
+        avgRolls = (double)totalRolls / (double)totalGames;
 
         if (dbLength > 1) {
             for (int index = 1; index < dbLength; index++) {

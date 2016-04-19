@@ -22,7 +22,7 @@ public abstract class Database {
     }
 
     public static Database create() {
-        return Database.create("mock", "dummyFilename");
+        return Database.create("concrete", "three_to_23_database.csv");
     }
 
     public abstract RollRecord[] getAllRecords();
