@@ -22,7 +22,7 @@ public class DiceGame {
             throws InvalidUsernameException {
         validateUsername(username);
 
-        Database db = Database.create("concrete", "threeTo23Database.csv");
+        Database db = Database.create();
         return new DiceGame(username, db);
     }
 
@@ -31,19 +31,6 @@ public class DiceGame {
         validateUsername(username);
 
         return new DiceGame(username, database);
-    }
-
-    // TODO: remove once GUI no longer needs
-    public static DiceGame create() {
-        DiceGame game;
-        try {
-            game = create("XXX");
-        }
-        catch (InvalidUsernameException e) {
-            game = null;
-        }
-
-        return game;
     }
 
     public RollResult roll(int numDice) throws RollAfterGameOverException {

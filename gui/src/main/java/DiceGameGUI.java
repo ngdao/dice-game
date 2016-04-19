@@ -27,7 +27,6 @@ public class DiceGameGUI extends javax.swing.JFrame {
     }
     
     private void initVar(){
-        thisGame = DiceGame.create();
         listLbl = new ArrayList<>();
         listLbl.add(picDie1);
         listLbl.add(picDie2);
@@ -40,8 +39,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die_face_5.png")));
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png")));
         listIcon.add(new javax.swing.ImageIcon(getClass().getResource("die-a.gif")));
-        data = Database.create("mock", "dummyPath");
-        stat = StatsProcessor.create("mock",data);
+        stat = StatsProcessor.create();
 }
     
     /**
@@ -284,7 +282,15 @@ public class DiceGameGUI extends javax.swing.JFrame {
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
-        thisGame = DiceGame.create();
+        String name = lblPlayerName.getText();
+
+        try {
+            thisGame = DiceGame.create(name);
+        }
+        catch (InvalidUsernameException ex) {
+            ex.printStackTrace();
+        }
+
         for (int index = 0; index < listLbl.size(); index++)
         {
             listLbl.get(index).setEnabled(false);
@@ -543,6 +549,5 @@ public class DiceGameGUI extends javax.swing.JFrame {
     private DiceGame thisGame;
     private List<JLabel> listLbl;
     private List<Icon> listIcon;
-    private Database data;
     private StatsProcessor stat;
 }
