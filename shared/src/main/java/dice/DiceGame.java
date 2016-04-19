@@ -22,7 +22,7 @@ public class DiceGame {
             throws InvalidUsernameException {
         validateUsername(username);
 
-        Database db = Database.create("concrete", "threeTo23Database.csv");
+        Database db = Database.create();
         return new DiceGame(username, db);
     }
 

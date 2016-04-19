@@ -21,6 +21,10 @@ public abstract class Database {
         }
     }
 
+    public static Database create() {
+        return Database.create("mock", "dummyFilename");
+    }
+
     public abstract RollRecord[] getAllRecords();
     public abstract RollRecord[] getRecordsForUser(String userId);
     public abstract void addRoll(RollRecord roll);
