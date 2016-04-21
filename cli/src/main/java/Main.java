@@ -159,6 +159,7 @@ public class Main {
             
         //Data
         int rank = 1;
+        System.out.println("Length: " + leaders.length);
         for (LeaderboardEntry leader : leaders) {
             System.out.printf("%-20d %-20s %-20s%n",
                               rank,

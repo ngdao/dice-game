@@ -33,12 +33,13 @@ public abstract class Database {
 class MockDatabase extends Database {
     public RollRecord[] getAllRecords() {
 
-        RollRecord recordA = new RollRecord("TAP", 0, 3, 13, 13);
-        RollRecord recordB = new RollRecord("TAP", 0, 1, 3, 16);
-        RollRecord recordC = new RollRecord("TAP", 0, 1, 6, 22);
-        RollRecord recordD = new RollRecord("CHS", 1, 3, 18, 18);
+        RollRecord recordA = new RollRecord("TAP", 0, 2, 6, 6);
+        RollRecord recordB = new RollRecord("CHS", 1, 3, 18, 18);
+        RollRecord recordC = new RollRecord("TAP", 2, 3, 13, 13);
+        RollRecord recordD = new RollRecord("TAP", 2, 1, 3, 16);
+        RollRecord recordE = new RollRecord("TAP", 2, 1, 6, 22);
 
-        RollRecord[] array = {recordA, recordB, recordC, recordD};
+        RollRecord[] array = {recordA, recordB, recordC, recordD, recordE};
 
         return array;
     }
