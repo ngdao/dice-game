@@ -1,6 +1,8 @@
 package dice;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public abstract class StatsProcessor {
@@ -121,7 +123,7 @@ class ConcreteStatsProcessor extends StatsProcessor {
         for (int index = 0; index < records.length; index++) {
 
             String name = records[index].getUserId();
-            if (!name.equals(prevName)) {
+            if (!name.equals(prevName) && !output.contains(name)) {
                 // found one we haven't added yet
                 output.add(name);
             }
@@ -171,12 +173,16 @@ class ConcreteStatsProcessor extends StatsProcessor {
         totalGames = totalGames + 1;
         avgRolls = (double)totalRolls / (double)totalGames;
 
+        int maxGameScore = 0;
         if (dbLength > 1) {
             for (int index = 1; index < dbLength; index++) {
                 int[] tempArray = new int[totalGames];
                 int temp = 0;
                 RollRecord record = records[index];
                 RollRecord previousRecord = records[index - 1];
+                if (record.getScore() > maxGameScore) {
+                    maxGameScore = record.getScore();
+                }
                 if (record.getGameId() != previousRecord.getGameId()) {
                     cumulativeScore += previousRecord.getScore();
                 }
@@ -187,6 +193,7 @@ class ConcreteStatsProcessor extends StatsProcessor {
         } else {
             RollRecord record = records[0];
             cumulativeScore = record.getScore();
+            maxGameScore = cumulativeScore;
         }
 
         avgScore = cumulativeScore / totalGames;
@@ -197,10 +204,25 @@ class ConcreteStatsProcessor extends StatsProcessor {
             .cumulativeScore(cumulativeScore)
             .avgScore(avgScore)
             .avgNumDiceUsed(avgNumDiceUsed)
+            .maxScore(maxGameScore)
             .build();
     }
 
     public LeaderboardEntry[] getLeaderboard() {
-        return new LeaderboardEntry[1];
+        String[] players = getPlayerList();
+        List<LeaderboardEntry> leaderboard = new ArrayList<LeaderboardEntry>();
+
+        for (String player : players) {
+            StatsData playerStats = getPlayerStats(player);
+            int maxScore = playerStats.getMaxScore();
+            leaderboard.add(new LeaderboardEntry(player, maxScore));
+        }
+
+        // sort in descending order
+        leaderboard.sort((LeaderboardEntry a, LeaderboardEntry b) ->
+                             b.getHighestScore() - a.getHighestScore()
+                        );
+
+        return leaderboard.toArray(new LeaderboardEntry[leaderboard.size()]);
     }
 }

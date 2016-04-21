@@ -7,6 +7,7 @@ public class StatsData {
     private final int cumulativeScore;
     private final double avgScore;
     private final double avgNumDiceUsed;
+    private final int maxScore;
 
     public int getTotalRolls() {
         return totalRolls;
@@ -28,6 +29,10 @@ public class StatsData {
         return avgNumDiceUsed;
     }
 
+    public int getMaxScore() {
+        return maxScore;
+    }
+
     // Builder Pattern adapted from here:
     // http://www.informit.com/articles/article.aspx?p=1216151&seqNum=2
     public static class Builder {
@@ -37,6 +42,7 @@ public class StatsData {
         private int cumulativeScore = 0;
         private double avgScore = 0.0;
         private double avgNumDiceUsed = 0.0;
+        private int maxScore = 0;
 
         public Builder totalRolls(int val) {
             totalRolls = val;
@@ -63,6 +69,11 @@ public class StatsData {
             return this;
         }
 
+        public Builder maxScore(int val) {
+            maxScore = val;
+            return this;
+        }
+
         public StatsData build() {
             return new StatsData(this);
         }
@@ -74,5 +85,6 @@ public class StatsData {
         cumulativeScore = builder.cumulativeScore;
         avgScore = builder.avgScore;
         avgNumDiceUsed = builder.avgNumDiceUsed;
+        maxScore = builder.maxScore;
     }
 }
