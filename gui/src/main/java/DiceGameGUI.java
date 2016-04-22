@@ -297,7 +297,6 @@ public class DiceGameGUI extends javax.swing.JFrame {
         }
         lblRollScore.setText("0");
         lblTotalScore.setText("0");
-        txtDiceNumber.setText("");
         btnRoll.setEnabled(true);
         picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
         picDie1.setEnabled(false);
