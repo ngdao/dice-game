@@ -2,6 +2,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import java.io.IOException;
+import java.nio.file.*;
 
 import dice.*;
 
@@ -56,5 +57,30 @@ public class TestStatsProcessor {
         assertThat(leaderboard[0].getHighestScore(), equalTo(22));
         assertThat(leaderboard[1].getPlayerName(), equalTo("CHS"));
         assertThat(leaderboard[1].getHighestScore(), equalTo(18));
+    }
+
+    @Test
+    public void getEmptyAllStats() {
+        Path path = Paths.get("src/test/resources/tempTestDb.csv");
+        try {
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
+            Files.createFile(path);
+            Files.delete(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Database db = Database.create("concrete", path.toString());
+        proc = StatsProcessor.create("concrete", db);
+        StatsData stats = proc.getAllStats();
+
+        assertThat(stats.getTotalRolls(), equalTo(0));
+        assertThat(stats.getAvgRollsPerGame(), equalTo(0.0));
+        assertThat(stats.getCumulativeScore(), equalTo(0));
+        assertThat(stats.getAvgScore(), equalTo(0.0));
+        assertThat(stats.getAvgNumDiceUsed(), equalTo(0.0));
+        assertThat(stats.getMaxScore(), equalTo(0));
     }
 }
