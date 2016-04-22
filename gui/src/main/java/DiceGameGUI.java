@@ -371,7 +371,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(
                     null,
-                    "Please enter a number from 1-3",x
+                    "Please enter a number from 1-3",
                     "Invalid Input",
                     JOptionPane.OK_OPTION);
         }
