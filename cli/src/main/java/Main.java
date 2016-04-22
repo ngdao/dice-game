@@ -208,7 +208,7 @@ public class Main {
         StatsProcessor stats = StatsProcessor.create();
         String[] playerNames = stats.getPlayerList();
 
-        if (statisticalDataExists(playerNames.length)) {
+        if (playerNames.length != 0) {
             int input;
 
             //Select from a list of player names
@@ -228,6 +228,8 @@ public class Main {
             //Display player's statistics
             System.out.println("\n- Statistics for " + playerNames[input] + "-");
             displayStatistics(playerStats);
+        } else {
+            displayNoStatsDataError();
         }
     }
 
@@ -239,25 +241,21 @@ public class Main {
         StatsProcessor stats = StatsProcessor.create();
         StatsData allStats = stats.getAllStats();
 
-        if (statisticalDataExists(allStats.getTotalRolls())) {
+        if (allStats.getTotalRolls() != 0) {
             //Display aggregate statistics
             System.out.println("\n- All Statistics -");
             displayStatistics(allStats);
+        } else {
+            displayNoStatsDataError();
         }
     }
 
     /**
-     * Displays an error if statistical data does not exist.
+     * Displays an error that statistical data does not exist.
      * i.e. Nobody has played the game yet.
-     * @param dataLength   Length of statistical data (total rolls or number of past players).
-     * @return             If the data equals zero (is empty).
      */
-    public static boolean statisticalDataExists(int dataLength) {
-        if (dataLength == 0) {
-            System.out.println("\nError: Not enough player data to display statistics!");
-            return false;
-        }
-        return true;
+    public static void displayNoStatsDataError() {
+        System.out.println("\nError: Not enough player data to display statistics!");
     }
 
     /**
