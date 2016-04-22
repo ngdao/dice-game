@@ -13,13 +13,6 @@ public class TestDatabase {
     Database db = Database.create("concrete", dbFilename);
 
     @Test
-    public void getAllRecordsEmptyFileDoesNotExist() {
-        String dbFilename = "ichiba.csv";
-        Database db = Database.create("concrete", dbFilename);
-        RollRecord[] records = db.getAllRecords();
-    }
-
-    @Test
     public void getAllRecords() {
         RollRecord[] records = db.getAllRecords();
 
