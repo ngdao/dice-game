@@ -57,4 +57,18 @@ public class TestStatsProcessor {
         assertThat(leaderboard[1].getPlayerName(), equalTo("CHS"));
         assertThat(leaderboard[1].getHighestScore(), equalTo(18));
     }
+
+    @Test
+    public void getEmptyAllStats() {
+        Database db = Database.create("concrete", "dummyFilename");
+        proc = StatsProcessor.create("concrete", db);
+        StatsData stats = proc.getAllStats();
+
+        assertThat(stats.getTotalRolls(), equalTo(0));
+        assertThat(stats.getAvgRollsPerGame(), equalTo(0.0));
+        assertThat(stats.getCumulativeScore(), equalTo(0));
+        assertThat(stats.getAvgScore(), equalTo(0.0));
+        assertThat(stats.getAvgNumDiceUsed(), equalTo(0.0));
+        assertThat(stats.getMaxScore(), equalTo(0));
+    }
 }

@@ -3,7 +3,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import java.io.IOException;
-import java.io.File;
+import java.nio.file.*;
 
 import dice.*;
 
@@ -12,12 +12,12 @@ public class TestDatabase {
     String dbFilename = "src/test/resources/testDatabase.csv";
     Database db = Database.create("concrete", dbFilename);
 
-    //@Test
-    //public void getAllRecordsEmptyFileDoesNotExist() {
-    //    String dbFilename = "ichiba.csv";
-    //    Database db = Database.create("concrete", dbFilename);
-    //    RollRecord[] records = db.getAllRecords();
-    //}
+    @Test
+    public void getAllRecordsEmptyFileDoesNotExist() {
+        String dbFilename = "ichiba.csv";
+        Database db = Database.create("concrete", dbFilename);
+        RollRecord[] records = db.getAllRecords();
+    }
 
     @Test
     public void getAllRecords() {
@@ -57,11 +57,18 @@ public class TestDatabase {
 
     @Test
     public void addRollSingle() {
-        String path = "src/test/resources/tempTestDb.csv";
-        File f = new File(path);
-        f.delete();
+        Path path = Paths.get("src/test/resources/tempTestDb.csv");
+        try {
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
+            Files.createFile(path);
+            Files.delete(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Database db = Database.create("concrete", path);
+        Database db = Database.create("concrete", path.toString());
         RollRecord roll = new RollRecord("CHS", 1, 1, 6, 0);
         db.addRoll(roll);
 
@@ -72,11 +79,18 @@ public class TestDatabase {
 
     @Test
     public void addRollMultiple() {
-        String path = "src/test/resources/tempTestDb.csv";
-        File f = new File(path);
-        f.delete();
+        Path path = Paths.get("src/test/resources/tempTestDb.csv");
+        try {
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
+            Files.createFile(path);
+            Files.delete(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Database db = Database.create("concrete", path);
+        Database db = Database.create("concrete", path.toString());
         RollRecord roll = new RollRecord("CHS", 1, 1, 6, 6);
         db.addRoll(roll);
         roll = new RollRecord("CHS", 1, 1, 3, 9);
