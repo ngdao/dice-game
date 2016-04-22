@@ -2,6 +2,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import java.io.IOException;
+import java.nio.file.*;
 
 import dice.*;
 
@@ -60,7 +61,18 @@ public class TestStatsProcessor {
 
     @Test
     public void getEmptyAllStats() {
-        Database db = Database.create("concrete", "dummyFilename");
+        Path path = Paths.get("src/test/resources/tempTestDb.csv");
+        try {
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
+            Files.createFile(path);
+            Files.delete(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Database db = Database.create("concrete", path.toString());
         proc = StatsProcessor.create("concrete", db);
         StatsData stats = proc.getAllStats();
 
