@@ -207,25 +207,28 @@ public class Main {
         //Obtain statistical data
         StatsProcessor stats = StatsProcessor.create();
         String[] playerNames = stats.getPlayerList();
-        int input;
 
-        //Select from a list of player names
-        do {
-            System.out.println("\nSelect a player:");
-            for (int index = 0; index < playerNames.length; index++) {
-                System.out.println((index + 1) + ". " + playerNames[index]);
-            }
+        if (statisticalDataExists(playerNames.length)) {
+            int input;
 
-            input = getIntInput() - 1;
+            //Select from a list of player names
+            do {
+                System.out.println("\nSelect a player:");
+                for (int index = 0; index < playerNames.length; index++) {
+                    System.out.println((index + 1) + ". " + playerNames[index]);
+                }
 
-        } while (!validIntInput(input, 0, (playerNames.length - 1)));
+                input = getIntInput() - 1;
 
-        //Select chosen player
-        StatsData playerStats = stats.getPlayerStats(playerNames[input]);
+            } while (!validIntInput(input, 0, (playerNames.length - 1)));
 
-        //Display player's statistics
-        System.out.println("\n- Statistics for " + playerNames[input] + "-");
-        displayStatistics(playerStats);
+            //Select chosen player
+            StatsData playerStats = stats.getPlayerStats(playerNames[input]);
+
+            //Display player's statistics
+            System.out.println("\n- Statistics for " + playerNames[input] + "-");
+            displayStatistics(playerStats);
+        }
     }
 
     /**
@@ -236,9 +239,25 @@ public class Main {
         StatsProcessor stats = StatsProcessor.create();
         StatsData allStats = stats.getAllStats();
 
-        //Display aggregate statistics
-        System.out.println("\n- All Statistics -");
-        displayStatistics(allStats);
+        if (statisticalDataExists(allStats.getTotalRolls())) {
+            //Display aggregate statistics
+            System.out.println("\n- All Statistics -");
+            displayStatistics(allStats);
+        }
+    }
+
+    /**
+     * Displays an error if statistical data does not exist.
+     * i.e. Nobody has played the game yet.
+     * @param dataLength   Length of the statistical data (total rolls or number of past players).
+     * @return             If the data equals zero (is empty).
+     */
+    public static boolean statisticalDataExists(int dataLength) {
+        if (dataLength == 0) {
+            System.out.println("\nError: Not enough player data to display statistics!");
+            return false;
+        }
+        return true;
     }
 
     /**
