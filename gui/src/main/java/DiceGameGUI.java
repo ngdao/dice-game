@@ -389,14 +389,14 @@ public class DiceGameGUI extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        String name;
        do {
-           name = JOptionPane.showInputDialog(null, "What are your initials (3-characters)?").toUpperCase();
+           name = JOptionPane.showInputDialog(null, "What are your initials (3-characters)?");
            if (name == null)
                System.exit(0);
            if (name.length() != 3 || !name.matches("[a-zA-Z]+"))
                JOptionPane.showMessageDialog(null, "Invalid Input, must contain 3 alpha characters!", "Invalid Input",
                JOptionPane.OK_OPTION);
        } while (name.length() != 3 || !name.matches("[a-zA-Z]+"));
-       
+       name = name.toUpperCase();
        try {
          thisGame = DiceGame.create(name);
        } catch(InvalidUsernameException ex) {
@@ -525,7 +525,10 @@ public class DiceGameGUI extends javax.swing.JFrame {
        
        JScrollPane spnStat = new JScrollPane(txaStat);
        spnStat.setPreferredSize(new Dimension(350, 150));
-       JOptionPane.showMessageDialog(this, spnStat, "Your Statistic",JOptionPane.PLAIN_MESSAGE,null);
+       JOptionPane.showMessageDialog(this, 
+              spnStat,
+              username+"'s Statistic",
+              JOptionPane.PLAIN_MESSAGE,null);
     }
     
     public void dieAnimation(int diceNumber)
