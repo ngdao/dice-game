@@ -106,7 +106,7 @@ class MockStatsProcessor extends StatsProcessor {
 
 
 /**
- * A class to process the stats collected in our database (CSV file)
+ * A class to process the stats collected in our database (CSV file).
  */
 class ConcreteStatsProcessor extends StatsProcessor {
 

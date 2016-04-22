@@ -249,7 +249,7 @@ public class Main {
     /**
      * Displays an error if statistical data does not exist.
      * i.e. Nobody has played the game yet.
-     * @param dataLength   Length of the statistical data (total rolls or number of past players).
+     * @param dataLength   Length of statistical data (total rolls or number of past players).
      * @return             If the data equals zero (is empty).
      */
     public static boolean statisticalDataExists(int dataLength) {
