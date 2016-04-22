@@ -313,26 +313,38 @@ public class DiceGameGUI extends javax.swing.JFrame {
 // TODO add your handling code here:
         int diceNumber = Integer.parseInt(txtDiceNumber.getText());
         RollResult rScore = new RollResult();
+        int tScore;
+        
         try{rScore = thisGame.roll(diceNumber);} 
         catch (RollAfterGameOverException ex)
         {ex.getStackTrace();}
-        Integer tScore = thisGame.getScore();
+        tScore = thisGame.getScore();
         lblRollScore.setText(""+rScore.sum());
-        lblTotalScore.setText(tScore.toString());
+        lblTotalScore.setText(""+ tScore);
         txtDiceNumber.setEnabled(true);
         
         for (int index = 0; index < rScore.rollCount(); index++)
         {
             int dieValue = rScore.rollsArray()[index];
-            if(dieValue == 0)
-                listLbl.get(index).setIcon(listIcon.get(5));
-            else
-               listLbl.get(index).setIcon(listIcon.get(dieValue-1));
+            listLbl.get(index).setIcon(listIcon.get(dieValue-1));
         }
         
-        if (thisGame.getCurrentTotal() >= 23){
-            JOptionPane.showMessageDialog(null, "Game Over!", "Game Over",
-            JOptionPane.OK_OPTION);
+        if (thisGame.getCurrentTotal() > 23){
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Game Over! You went over 23 by " 
+                            + (thisGame.getCurrentTotal()-23),
+                    "Game Over!",
+                    JOptionPane.OK_OPTION);
+            btnRoll.setEnabled(false);
+            btnStop.setEnabled(false);
+        }
+        else if (thisGame.getCurrentTotal() == 23){
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Congratulation! You hit 23!!!",
+                    "Game Over!",
+                    JOptionPane.OK_OPTION);
             btnRoll.setEnabled(false);
             btnStop.setEnabled(false);
         }
@@ -357,8 +369,11 @@ public class DiceGameGUI extends javax.swing.JFrame {
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please enter a number from 1-3", "Invalid Input",
-            JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Please enter a number from 1-3",x
+                    "Invalid Input",
+                    JOptionPane.OK_OPTION);
         }
     }//GEN-LAST:event_btnRollActionPerformed
 
@@ -375,7 +390,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        String name;
        do {
-           name = JOptionPane.showInputDialog(null, "What are your initials (3-characters)?");
+           name = JOptionPane.showInputDialog(null, "What are your initials (3-characters)?").toUpperCase();
            if (name == null)
                System.exit(0);
            if (name.length() != 3 || !name.matches("[a-zA-Z]+"))
@@ -396,22 +411,22 @@ public class DiceGameGUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, 
             "Goal of the game: \n"
             + "The goal of the game is to accumulate a total of exactly 23,"
-            + " or get as close as you can without going over, by rolling\n"
+                + " or get as close as you can without going over, by rolling\n"
             + "1-3 dice an unlimited amount of times. You will have the "
-            + "choice to use 1, 2, or 3 dice to increase your\n "
+                + "choice to use 1, 2, or 3 dice to increase your\n "
             + "overall total and achieve the goal of 23.\n"
             + "\n"
             + "Rules of the Game:\n"
             + "1.The player must enter three letters, generally "
-            + "initials, for their game name.\n" 
+                + "initials, for their game name.\n" 
             +"2.The player can choose the number of dice to use per roll.\n" 
             +"3.The player must roll the chosen number of dice and add the "
                     + "die faces to get a total.\n" 
             +"    For example, if you roll a 5, 6, and 3, your total will be 14.\n" 
             +"4.The player will have the option to stop there and record "
-            + "their score or they can roll again to increase their total.\n" 
+                + "their score or they can roll again to increase their total.\n" 
             +"5.The player can roll as many times as they want, but as soon "
-            + "as their cumulative rolls equal or exceed 23, the game is over."
+                + "as their cumulative rolls equal or exceed 23, the game is over."
             ,"Instruction",JOptionPane.OK_OPTION,listIcon.get(5));
     }//GEN-LAST:event_btnInstrActionPerformed
 
@@ -500,18 +515,15 @@ public class DiceGameGUI extends javax.swing.JFrame {
        txaStat.setEditable(false);
        txaStat.setFont(new Font("Sans-Serif", Font.PLAIN, 10));
        txaStat.setText(
-               "Cumulative score:"+"                "
-                       + thisPlayerStat.getCumulativeScore() + "\n"
-              +"Average score:"+"                   "
-                       + thisPlayerStat.getAvgScore() + "\n"
-              +"Average number of dice used:"+"     " 
-                       + thisPlayerStat.getAvgNumDiceUsed() +"\n"
-              +"Total Roll:"+"                      "
-                       + thisPlayerStat.getTotalRolls() + "\n"
-              +"Average rolls per game:"+"          "
+               "Cumulative score: "+ thisPlayerStat.getCumulativeScore() + "\n"
+              +"Average score: " + thisPlayerStat.getAvgScore() + "\n"
+              +"Average number of dice used: "
+                       +thisPlayerStat.getAvgNumDiceUsed() +"\n"
+              +"Total Roll: "+ thisPlayerStat.getTotalRolls() + "\n"
+              +"Average rolls per game: " 
                        + thisPlayerStat.getAvgRollsPerGame() + "\n");
-       txaStat.setBackground(Color.white);
-       txaStat.setForeground(Color.black);
+       
+       
        JScrollPane spnStat = new JScrollPane(txaStat);
        spnStat.setPreferredSize(new Dimension(350, 150));
        JOptionPane.showMessageDialog(this, spnStat, "Your Statistic",JOptionPane.PLAIN_MESSAGE,null);
