@@ -128,13 +128,13 @@ public class DiceGameGUI extends javax.swing.JFrame {
         lblPlayerName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPlayerName.setText("Player's Name");
 
-        picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie1.setEnabled(false);
 
-        picDie2.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie2.setEnabled(false);
 
-        picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie3.setEnabled(false);
 
         btnReset.setText("RESET");
@@ -510,20 +510,20 @@ public class DiceGameGUI extends javax.swing.JFrame {
     public void displayUserStat(String username)
     {
        StatsData thisPlayerStat = stat.getPlayerStats(username);
-       JTextArea txaStat = new JTextArea();
-       txaStat.setEditable(false);
-       txaStat.setFont(new Font("Sans-Serif", Font.PLAIN, 10));
-       txaStat.setText(
-               "Cumulative score: "+ thisPlayerStat.getCumulativeScore() + "\n"
-              +"Average score: " + thisPlayerStat.getAvgScore() + "\n"
-              +"Average number of dice used: "
-                       +thisPlayerStat.getAvgNumDiceUsed() +"\n"
-              +"Total Roll: "+ thisPlayerStat.getTotalRolls() + "\n"
-              +"Average rolls per game: " 
-                       + thisPlayerStat.getAvgRollsPerGame() + "\n");
+       JTable tblStat;
+       Object[][] data = 
+       {
+        {"Cumulative score:",thisPlayerStat.getCumulativeScore()},
+        {"Average score:",thisPlayerStat.getAvgScore()},
+        {"Average number of dice used:",thisPlayerStat.getAvgNumDiceUsed()},
+        {"Total Roll:",thisPlayerStat.getTotalRolls()},
+        {"Average rolls per game:",thisPlayerStat.getAvgRollsPerGame()}
+       };
        
+       tblStat = new JTable(data, new Object[]{"",""});
+       tblStat.getColumnModel().getColumn(0).setPreferredWidth(170);
        
-       JScrollPane spnStat = new JScrollPane(txaStat);
+       JScrollPane spnStat = new JScrollPane(tblStat);
        spnStat.setPreferredSize(new Dimension(350, 150));
        JOptionPane.showMessageDialog(this, 
               spnStat,
