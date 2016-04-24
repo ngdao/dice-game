@@ -93,6 +93,13 @@ class ConcreteDatabase extends Database {
                                                rollValue, score);
             records.add(record);
         }
+        
+        try {
+            reader.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return records.toArray(new RollRecord[records.size()]);
     }
@@ -121,6 +128,13 @@ class ConcreteDatabase extends Database {
             }
         }
 
+        try {
+            reader.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return records.toArray(new RollRecord[records.size()]);
     }
 
@@ -139,6 +153,7 @@ class ConcreteDatabase extends Database {
             writer.close();
         }
         catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
