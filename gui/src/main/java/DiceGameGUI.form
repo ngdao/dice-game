@@ -102,7 +102,7 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btnOStat" min="-2" pref="120" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="btnOStat1" min="-2" pref="120" max="-2" attributes="0"/>
+                                      <Component id="btnLeaderBoard" min="-2" pref="120" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="btnRoll" min="-2" pref="120" max="-2" attributes="0"/>
@@ -158,7 +158,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnPStat" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
                       <Component id="btnOStat" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
-                      <Component id="btnOStat1" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="btnLeaderBoard" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnClose" min="-2" max="-2" attributes="0"/>
@@ -225,6 +225,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnInstr">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="11" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Instruction"/>
           </Properties>
           <Events>
@@ -293,7 +296,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOStatActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnOStat1">
+        <Component class="javax.swing.JButton" name="btnLeaderBoard">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="10" style="0"/>
@@ -301,7 +304,7 @@
             <Property name="text" type="java.lang.String" value="LEADER BOARD"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOStat1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLeaderBoardActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
