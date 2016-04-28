@@ -7,12 +7,14 @@ public class DiceGame {
     private Die die;
     private String username;
     private int currentTotal;
+    private int currentScore;
     private int gameId;
     private Database database;
 
     private DiceGame(String username, Database database) {
         this.username = username;
         currentTotal = 0;
+        currentScore = 0;
         die = new Die();
         this.database = database;
         this.gameId = -1;
@@ -49,6 +51,8 @@ public class DiceGame {
         }
 
         currentTotal += result.sum();
+        
+        if()
 
         if (gameId == -1) {
             gameId = getNextGameId();
@@ -67,21 +71,15 @@ public class DiceGame {
     }
 
     public int getScore() {
-        int score;
-
-        int currentTotal = getCurrentTotal();
 
         if (currentTotal > MAX_TOTAL) {
-            score = 0;
+            currentScore = 0;
         }
         else if (currentTotal == MAX_TOTAL) {
-            score = 2 * MAX_TOTAL;
-        }
-        else {
-            score = currentTotal;
+            currentScore *= 2;
         }
 
-        return score;
+        return currentScore;
     }
 
     public String getUsername() {
