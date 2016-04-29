@@ -3,7 +3,9 @@ package dice;
 
 public class DiceGame {
     private static final int MAX_TOTAL = 23;
-
+    public static final int THREE_OF_A_KIND_BONUS = 5;
+    public static final int CONSECUTIVE_ROLL_BONUS = 10;
+    
     private Die die;
     private String username;
     private int currentTotal;
@@ -52,8 +54,18 @@ public class DiceGame {
 
         currentTotal += result.sum();
         
-        if()
-
+        
+        switch (result.getSpecialRollCode())
+        {
+            case 1:
+                currentScore += THREE_OF_A_KIND_BONUS +result.sum();
+                break;
+            case 2:
+                currentScore += CONSECUTIVE_ROLL_BONUS+result.sum();
+                break;
+            default:
+                currentScore += result.sum();
+        }
         if (gameId == -1) {
             gameId = getNextGameId();
         }

@@ -10,6 +10,7 @@ public class RollResult {
     public RollResult() {
         rolls = new ArrayList<Integer>();
         specialRoll = "";
+        specialRollCode=0;
     }
 
     public void addRoll(int rollValue) {
@@ -73,7 +74,7 @@ public class RollResult {
         {
             for (Integer arrayE : array) {
                 int index2;
-                if (arrayE < 0) {
+                if (arrayE > 0) {
                     index2 = arrayE - min;
                 } else
                     index2 = -arrayE - min;
@@ -83,8 +84,10 @@ public class RollResult {
                 else 
                     return false;
             }
-        }
-        return true;
+            return true;
+        } else
+            return false;
+        
     }
     
     private int getMax(ArrayList<Integer> array)
