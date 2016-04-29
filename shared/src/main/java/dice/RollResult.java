@@ -15,6 +15,7 @@ public class RollResult {
 
     public void addRoll(int rollValue) {
         rolls.add(rollValue);
+        updateSpecialRoll();
     }
 
     public int sum() {
@@ -42,24 +43,23 @@ public class RollResult {
     }
     
     public String getSpecialRollString(){
-        updateSpecialRoll();
         return specialRoll;
     }
     
     public int getSpecialRollCode(){
-        updateSpecialRoll();
         return specialRollCode;
     }
     
     private void updateSpecialRoll(){
-        if(rolls.size() == 3){
-            if(rolls.get(0) == rolls.get(1) && rolls.get(1) == rolls.get(2))
+        ArrayList<Integer> temp = new ArrayList(rolls);
+        if(temp.size() == 3){
+            if(temp.get(0) == rolls.get(1) && rolls.get(1) == rolls.get(2))
             {
                 specialRoll = "3 of a kind";
                 specialRollCode = 1;
             }
             
-            if(isConsecutive(rolls))
+            if(isConsecutive(temp))
             {
                 specialRoll = "Consecutive roll";
                 specialRollCode = 2;

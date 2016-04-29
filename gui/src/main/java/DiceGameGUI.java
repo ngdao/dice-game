@@ -195,19 +195,14 @@ public class DiceGameGUI extends javax.swing.JFrame {
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                             .addGap(48, 48, 48)
                                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                                    .addGap(10, 10, 10)
-                                                    .addComponent(lblSpecialRoll))
-                                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(lblRollScore)
-                                                        .addComponent(lblTotalScore)
-                                                        .addComponent(lblRollTotal))))))
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(lblRollScore)
+                                                .addComponent(lblTotalScore)
+                                                .addComponent(lblRollTotal))))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(picDie2)
                                         .addGap(18, 18, 18)
@@ -233,7 +228,10 @@ public class DiceGameGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(lblSpecialRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -265,7 +263,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(lblTotalScore))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSpecialRoll)
+                .addComponent(lblSpecialRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,7 +274,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
                     .addComponent(btnPStat, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOStat, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLeaderBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addContainerGap())
         );
@@ -294,7 +292,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -342,15 +340,18 @@ public class DiceGameGUI extends javax.swing.JFrame {
         catch (RollAfterGameOverException ex)
         {ex.getStackTrace();}
         tScore = thisGame.getScore();
-        
         lblRollScore.setText(""+rScore.sum());
         lblRollTotal.setText(""+thisGame.getCurrentTotal());
         lblTotalScore.setText(""+ tScore);
         txtDiceNumber.setEnabled(true);
-        if(rScore.getSpecialRollCode() != 0)
-            lblSpecialRoll.setText(rScore.getSpecialRollString()+ " +");
-        
-        
+        switch(rScore.getSpecialRollCode()){
+            case 1:
+                lblSpecialRoll.setText(rScore.getSpecialRollString()+ " +" + thisGame.THREE_OF_A_KIND_BONUS);
+                break;
+            case 2:
+                lblSpecialRoll.setText(rScore.getSpecialRollString()+ " +" + thisGame.CONSECUTIVE_ROLL_BONUS);
+                break;
+        }
         for (int index = 0; index < rScore.rollCount(); index++)
         {
             int dieValue = rScore.rollsArray()[index];
@@ -394,6 +395,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             txtDiceNumber.setEnabled(false);
             btnStop.setEnabled(true);
             btnRoll.setEnabled(false);
+            lblSpecialRoll.setText("");
         }
         else
         {

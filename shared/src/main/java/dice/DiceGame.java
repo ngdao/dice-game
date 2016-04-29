@@ -88,7 +88,7 @@ public class DiceGame {
             currentScore = 0;
         }
         else if (currentTotal == MAX_TOTAL) {
-            currentScore *= 2;
+           currentScore = currentScore * 2;
         }
 
         return currentScore;
