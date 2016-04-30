@@ -346,10 +346,10 @@ public class DiceGameGUI extends javax.swing.JFrame {
         txtDiceNumber.setEnabled(true);
         switch(rScore.getSpecialRollCode()){
             case 1:
-                lblSpecialRoll.setText(rScore.getSpecialRollString()+ " +" + thisGame.THREE_OF_A_KIND_BONUS);
+                lblSpecialRoll.setText("Three of a Kind +" + thisGame.THREE_OF_A_KIND_BONUS);
                 break;
             case 2:
-                lblSpecialRoll.setText(rScore.getSpecialRollString()+ " +" + thisGame.CONSECUTIVE_ROLL_BONUS);
+                lblSpecialRoll.setText("Consecutive +" + thisGame.CONSECUTIVE_ROLL_BONUS);
                 break;
         }
         for (int index = 0; index < rScore.rollCount(); index++)
