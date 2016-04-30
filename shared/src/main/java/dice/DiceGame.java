@@ -72,10 +72,10 @@ public class DiceGame {
          switch (result.getSpecialRollCode())
         {
             case 1:
-                currentScore += THREE_OF_A_KIND_BONUS +result.sum();
+                currentScore += THREE_OF_A_KIND_BONUS + result.sum();
                 break;
             case 2:
-                currentScore += CONSECUTIVE_ROLL_BONUS+result.sum();
+                currentScore += CONSECUTIVE_ROLL_BONUS + result.sum();
                 break;
             default:
                 currentScore += result.sum();
