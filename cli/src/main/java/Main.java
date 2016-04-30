@@ -96,7 +96,9 @@ public class Main {
 
         //Play the game
         do {
-            System.out.println("\nCurrent total: " + game.getCurrentTotal());
+            System.out.println("\nGame score: " + game.getScore());
+            System.out.println("Current total: " + game.getCurrentTotal());
+            System.out.println("(" + (23 - game.getCurrentTotal()) + " away from 23)");
             System.out.println("Number of dice: " + numDice);
             System.out.println("\n1. Roll");
             System.out.println("2. Change number of dice");
@@ -113,11 +115,26 @@ public class Main {
                     try {
                         result = game.roll(numDice);
                         rollTotal = result.sum();
+                        int[] rollsArray = result.rollsArray();
+                        int rollSize = result.rollCount();
+                        
+                        System.out.print("\nYou throw");
+                        for (int dice : rollsArray) {
+                           System.out.print(" " + dice);
+                        }
+                        System.out.println(", for a total of " + rollTotal);
+                    
+                        //Check special roll
+                        int special = result.getSpecialRollCode();
+                       
+                        if (special == 1) {
+                           System.out.println("\nBONUS: +15 points added for three of a kind!");
+                        } else if (special == 2) {
+                           System.out.println("\nBONUS: +10 points added for three consecutive dice!");
+                        }
                     } catch (RollAfterGameOverException e) {
                         System.out.println("Error: " + e.getMessage());
                     }
-
-                    System.out.println("\nYou rolled " + numDice + " dice, for a total of " + rollTotal);
 
                     break;
                 case 2: //Change number of dice
