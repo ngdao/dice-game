@@ -8,7 +8,7 @@ import dice.*;
 
 
 public class TestStatsProcessor {
-    private StatsProcessor proc, proc2;
+    private StatsProcessor proc;
 
     @Before
     public void setUp() {
@@ -40,8 +40,7 @@ public class TestStatsProcessor {
     public void getPlayerStats() {
         StatsData stats = proc.getPlayerStats("CHS");
         StatsData stats2 = proc.getPlayerStats("TAP");
-        System.out.println("avgRollsPerGame = " + stats.getAvgRollsPerGame());
-        System.out.println("avgRollsPerGame = " + stats2.getAvgRollsPerGame());
+
         assertThat(stats.getAvgRollsPerGame(), equalTo(1.0));
         assertThat(stats2.getAvgRollsPerGame(), equalTo(3.0));
     }
