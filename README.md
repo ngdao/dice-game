@@ -39,8 +39,8 @@ below.
 
 # Special Rolls:
 
-1.Three of a kind: 3 identical dice (bonus 15)
-2.Consecutive: dice values are consecutive regardless of their order (bonus 10)
+1. Three of a kind: 3 identical dice (bonus 15)
+2. Consecutive: dice values are consecutive regardless of their order (bonus 10)
 
 
 ## Linux
