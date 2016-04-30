@@ -151,20 +151,20 @@ public class Main {
         LeaderboardEntry[] leaders = stats.getLeaderboard();
         
         //Header
-        System.out.println("\n- High Scores -");
-        System.out.printf("%-20s %-20s %-20s%n",
+        System.out.println("\n- High Scores (Top 10) -");
+        System.out.printf("%-9s %-9s %-9s%n",
                           "Rank",
                           "Score",
                           "Name");
             
-        //Data
+        //Displays the top 10 leaders
         int rank = 1;
-        System.out.println("Length: " + leaders.length);
-        for (LeaderboardEntry leader : leaders) {
-            System.out.printf("%-20d %-20s %-20s%n",
+        while (rank <= leaders.length && rank <= 10) {
+            int index = rank - 1;
+            System.out.printf("%-9d %-9d %-9s%n",
                               rank,
-                              leader.getHighestScore(),
-                              leader.getPlayerName());
+                              leaders[index].getHighestScore(),
+                              leaders[index].getPlayerName());
             
             rank++;
         }
@@ -207,25 +207,30 @@ public class Main {
         //Obtain statistical data
         StatsProcessor stats = StatsProcessor.create();
         String[] playerNames = stats.getPlayerList();
-        int input;
 
-        //Select from a list of player names
-        do {
-            System.out.println("\nSelect a player:");
-            for (int index = 0; index < playerNames.length; index++) {
-                System.out.println((index + 1) + ". " + playerNames[index]);
-            }
+        if (playerNames.length != 0) {
+            int input;
 
-            input = getIntInput() - 1;
+            //Select from a list of player names
+            do {
+                System.out.println("\nSelect a player:");
+                for (int index = 0; index < playerNames.length; index++) {
+                    System.out.println((index + 1) + ". " + playerNames[index]);
+                }
 
-        } while (!validIntInput(input, 0, (playerNames.length - 1)));
+                input = getIntInput() - 1;
 
-        //Select chosen player
-        StatsData playerStats = stats.getPlayerStats(playerNames[input]);
+            } while (!validIntInput(input, 0, (playerNames.length - 1)));
 
-        //Display player's statistics
-        System.out.println("\n- Statistics for " + playerNames[input] + "-");
-        displayStatistics(playerStats);
+            //Select chosen player
+            StatsData playerStats = stats.getPlayerStats(playerNames[input]);
+
+            //Display player's statistics
+            System.out.println("\n- Statistics for " + playerNames[input] + "-");
+            displayStatistics(playerStats);
+        } else {
+            displayNoStatsDataError();
+        }
     }
 
     /**
@@ -236,9 +241,21 @@ public class Main {
         StatsProcessor stats = StatsProcessor.create();
         StatsData allStats = stats.getAllStats();
 
-        //Display aggregate statistics
-        System.out.println("\n- All Statistics -");
-        displayStatistics(allStats);
+        if (allStats.getTotalRolls() != 0) {
+            //Display aggregate statistics
+            System.out.println("\n- All Statistics -");
+            displayStatistics(allStats);
+        } else {
+            displayNoStatsDataError();
+        }
+    }
+
+    /**
+     * Displays an error that statistical data does not exist.
+     * i.e. Nobody has played the game yet.
+     */
+    public static void displayNoStatsDataError() {
+        System.out.println("\nError: Not enough player data to display statistics!");
     }
 
     /**
@@ -247,14 +264,14 @@ public class Main {
      */
     public static void displayStatistics(StatsData stats) {
         //Display headers
-        System.out.printf("%-20s %-20s %-20s %-20s %-20s%n",
+        System.out.printf("%-12s %-20s %-20s %-12s %-20s%n",
                           "Total Rolls",
                           "Avg Rolls Per Game",
                           "Cumulative Score",
                           "Avg Score",
                           "Avg # Of Dice Used");
         //Display data
-        System.out.printf("%-20s %-20s %-20s %-20s %-20s%n",
+        System.out.printf("%-12d %-20.2f %-20d %-12.2f %-20.2f%n",
                           stats.getTotalRolls(),
                           stats.getAvgRollsPerGame(),
                           stats.getCumulativeScore(),
@@ -344,6 +361,6 @@ public class Main {
             }
         } while (invalidInitials);
 
-        return input;
+        return input.toUpperCase();
     }
 }

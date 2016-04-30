@@ -69,7 +69,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
         btnReset = new javax.swing.JButton();
         btnPStat = new javax.swing.JButton();
         btnOStat = new javax.swing.JButton();
-        btnOStat1 = new javax.swing.JButton();
+        btnLeaderBoard = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -80,14 +80,14 @@ public class DiceGameGUI extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
 
-        btnRoll.setText("ROLL");
+        btnRoll.setText("ROLL DICE");
         btnRoll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRollActionPerformed(evt);
             }
         });
 
-        btnStop.setText("STOP");
+        btnStop.setText("THROW DICE");
         btnStop.setEnabled(false);
         btnStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +118,8 @@ public class DiceGameGUI extends javax.swing.JFrame {
             }
         });
 
-        btnInstr.setText("Instruction");
+        btnInstr.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnInstr.setText("Instructions");
         btnInstr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInstrActionPerformed(evt);
@@ -128,16 +129,16 @@ public class DiceGameGUI extends javax.swing.JFrame {
         lblPlayerName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPlayerName.setText("Player's Name");
 
-        picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie1.setEnabled(false);
 
-        picDie2.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie2.setEnabled(false);
 
-        picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie3.setEnabled(false);
 
-        btnReset.setText("RESET");
+        btnReset.setText("SAVE SCORE");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnResetActionPerformed(evt);
@@ -160,11 +161,11 @@ public class DiceGameGUI extends javax.swing.JFrame {
             }
         });
 
-        btnOStat1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        btnOStat1.setText("LEADER BOARD");
-        btnOStat1.addActionListener(new java.awt.event.ActionListener() {
+        btnLeaderBoard.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnLeaderBoard.setText("LEADERBOARD");
+        btnLeaderBoard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOStat1ActionPerformed(evt);
+                btnLeaderBoardActionPerformed(evt);
             }
         });
 
@@ -211,7 +212,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(btnOStat, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnOStat1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnLeaderBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(btnRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -254,7 +255,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPStat, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOStat, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOStat1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLeaderBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnClose)
                 .addContainerGap())
@@ -281,6 +282,17 @@ public class DiceGameGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        JOptionPane.showMessageDialog(
+                    null, 
+                    "Game Over! You save your score of " 
+                    + thisGame.getCurrentTotal()
+                    + "\nFinal Score: "
+                    + thisGame.getScore(),
+                    "Game Over!",
+                    JOptionPane.OK_OPTION);
+            btnRoll.setEnabled(false);
+            btnStop.setEnabled(false);
+        
         // TODO add your handling code here:
         String name = lblPlayerName.getText();
 
@@ -332,7 +344,9 @@ public class DiceGameGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(
                     null, 
                     "Game Over! You went over 23 by " 
-                            + (thisGame.getCurrentTotal()-23),
+                    + (thisGame.getCurrentTotal()-23)
+                    + "\nFinal Score: "
+                    + tScore,
                     "Game Over!",
                     JOptionPane.OK_OPTION);
             btnRoll.setEnabled(false);
@@ -341,8 +355,10 @@ public class DiceGameGUI extends javax.swing.JFrame {
         else if (thisGame.getCurrentTotal() == 23){
             JOptionPane.showMessageDialog(
                     null, 
-                    "Congratulation! You hit 23!!!",
-                    "Game Over!",
+                    "Congratulations! You hit 23!"
+                    + "\nFinal Score: "
+                    + tScore,
+                    "Congratulations!",
                     JOptionPane.OK_OPTION);
             btnRoll.setEnabled(false);
             btnStop.setEnabled(false);
@@ -440,9 +456,33 @@ public class DiceGameGUI extends javax.swing.JFrame {
        displayUserStat(targetUser);
     }//GEN-LAST:event_btnOStatActionPerformed
 
-    private void btnOStat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOStat1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnOStat1ActionPerformed
+    private void btnLeaderBoardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaderBoardActionPerformed
+        LeaderboardEntry[] lbe = stat.getLeaderboard();
+        Object[][] data = new Object[lbe.length][3];
+        String[] columnNames = {"#","Player's Initial", "Highest Score"};
+        
+        for (int row = 0; row < lbe.length; row++)
+        {
+            data[row][0] = row+1;
+            data[row][1] = lbe[row].getPlayerName();
+            data[row][2] = lbe[row].getHighestScore();
+        }
+        
+        JTable tblLeaderboard = new JTable(data,columnNames);
+        tblLeaderboard.enableInputMethods(false);
+        tblLeaderboard.getColumnModel().getColumn(0).setMaxWidth(20);
+        tblLeaderboard.setFont(new Font("Tahoma", 1,13));
+        
+        JScrollPane spnLeaderboard = new JScrollPane(tblLeaderboard);
+        spnLeaderboard.setPreferredSize(new Dimension(500,200));
+        JOptionPane.showMessageDialog(
+                null,
+                spnLeaderboard,
+                "Leaderboard",
+                JOptionPane.PLAIN_MESSAGE,
+                null);
+        
+    }//GEN-LAST:event_btnLeaderBoardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -510,20 +550,20 @@ public class DiceGameGUI extends javax.swing.JFrame {
     public void displayUserStat(String username)
     {
        StatsData thisPlayerStat = stat.getPlayerStats(username);
-       JTextArea txaStat = new JTextArea();
-       txaStat.setEditable(false);
-       txaStat.setFont(new Font("Sans-Serif", Font.PLAIN, 10));
-       txaStat.setText(
-               "Cumulative score: "+ thisPlayerStat.getCumulativeScore() + "\n"
-              +"Average score: " + thisPlayerStat.getAvgScore() + "\n"
-              +"Average number of dice used: "
-                       +thisPlayerStat.getAvgNumDiceUsed() +"\n"
-              +"Total Roll: "+ thisPlayerStat.getTotalRolls() + "\n"
-              +"Average rolls per game: " 
-                       + thisPlayerStat.getAvgRollsPerGame() + "\n");
+       JTable tblStat;
+       Object[][] data = 
+       {
+        {"Cumulative score:",thisPlayerStat.getCumulativeScore()},
+        {"Average score:",thisPlayerStat.getAvgScore()},
+        {"Average number of dice used:",thisPlayerStat.getAvgNumDiceUsed()},
+        {"Total Roll:",thisPlayerStat.getTotalRolls()},
+        {"Average rolls per game:",thisPlayerStat.getAvgRollsPerGame()}
+       };
        
+       tblStat = new JTable(data, new Object[]{"",""});
+       tblStat.getColumnModel().getColumn(0).setPreferredWidth(170);
        
-       JScrollPane spnStat = new JScrollPane(txaStat);
+       JScrollPane spnStat = new JScrollPane(tblStat);
        spnStat.setPreferredSize(new Dimension(350, 150));
        JOptionPane.showMessageDialog(this, 
               spnStat,
@@ -542,8 +582,8 @@ public class DiceGameGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnInstr;
+    private javax.swing.JButton btnLeaderBoard;
     private javax.swing.JButton btnOStat;
-    private javax.swing.JButton btnOStat1;
     private javax.swing.JButton btnPStat;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnRoll;
