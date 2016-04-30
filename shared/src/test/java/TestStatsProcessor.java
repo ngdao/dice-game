@@ -37,6 +37,15 @@ public class TestStatsProcessor {
     }
 
     @Test
+    public void getPlayerStats() {
+        StatsData stats = proc.getPlayerStats("CHS");
+        StatsData stats2 = proc.getPlayerStats("TAP");
+
+        assertThat(stats.getAvgRollsPerGame(), equalTo(1.0));
+        assertThat(stats2.getAvgRollsPerGame(), equalTo(3.0));
+    }
+
+    @Test
     public void maxScore() {
         StatsData stats = proc.getAllStats();
         assertThat(stats.getMaxScore(), equalTo(22));
