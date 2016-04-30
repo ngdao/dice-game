@@ -106,7 +106,7 @@ class MockStatsProcessor extends StatsProcessor {
 
 
 /**
- * A class to process the stats collected in our database (CSV file)
+ * A class to process the stats collected in our database (CSV file).
  */
 class ConcreteStatsProcessor extends StatsProcessor {
 
@@ -161,42 +161,44 @@ class ConcreteStatsProcessor extends StatsProcessor {
         double avgRolls = 0.0;
         double avgScore = 0.0;
         double avgNumDiceUsed = 0.0;
-
-        for (int index = 0; index < dbLength; index++) {
-            int temp = 0;
-            RollRecord record = records[index];
-            totalGames = record.getGameId();
-            totalDiceUsed += record.getNumDice();
-        }
-
-        avgNumDiceUsed = (double)totalDiceUsed / (double)dbLength;
-        totalGames = totalGames + 1;
-        avgRolls = (double)totalRolls / (double)totalGames;
-
         int maxGameScore = 0;
-        if (dbLength > 1) {
-            for (int index = 1; index < dbLength; index++) {
-                int[] tempArray = new int[totalGames];
+
+        if (dbLength != 0) {
+            for (int index = 0; index < dbLength; index++) {
                 int temp = 0;
                 RollRecord record = records[index];
-                RollRecord previousRecord = records[index - 1];
-                if (record.getScore() > maxGameScore) {
-                    maxGameScore = record.getScore();
-                }
-                if (record.getGameId() != previousRecord.getGameId()) {
-                    cumulativeScore += previousRecord.getScore();
-                }
-                if (index == dbLength - 1) {
-                    cumulativeScore += record.getScore();
-                }
+                totalGames = record.getGameId();
+                totalDiceUsed += record.getNumDice();
             }
-        } else {
-            RollRecord record = records[0];
-            cumulativeScore = record.getScore();
-            maxGameScore = cumulativeScore;
-        }
 
-        avgScore = cumulativeScore / totalGames;
+            avgNumDiceUsed = (double)totalDiceUsed / (double)dbLength;
+            totalGames = totalGames + 1;
+            avgRolls = (double)totalRolls / (double)totalGames;
+
+            if (dbLength > 1) {
+                for (int index = 1; index < dbLength; index++) {
+                    int[] tempArray = new int[totalGames];
+                    int temp = 0;
+                    RollRecord record = records[index];
+                    RollRecord previousRecord = records[index - 1];
+                    if (record.getScore() > maxGameScore) {
+                        maxGameScore = record.getScore();
+                    }
+                    if (record.getGameId() != previousRecord.getGameId()) {
+                        cumulativeScore += previousRecord.getScore();
+                    }
+                    if (index == dbLength - 1) {
+                        cumulativeScore += record.getScore();
+                    }
+                }
+            } else {
+                RollRecord record = records[0];
+                cumulativeScore = record.getScore();
+                maxGameScore = cumulativeScore;
+            }
+
+            avgScore = cumulativeScore / totalGames;
+        }
 
         return new StatsData.Builder()
             .totalRolls(dbLength)
