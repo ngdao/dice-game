@@ -333,7 +333,9 @@ public class DiceGameGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(
                     null, 
                     "Game Over! You went over 23 by " 
-                            + (thisGame.getCurrentTotal()-23),
+                    + (thisGame.getCurrentTotal()-23)
+                    + "\nFinal Score: "
+                    + tScore,
                     "Game Over!",
                     JOptionPane.OK_OPTION);
             btnRoll.setEnabled(false);
@@ -342,8 +344,10 @@ public class DiceGameGUI extends javax.swing.JFrame {
         else if (thisGame.getCurrentTotal() == 23){
             JOptionPane.showMessageDialog(
                     null, 
-                    "Congratulation! You hit 23!!!",
-                    "Game Over!",
+                    "Congratulations! You hit 23!"
+                    + "\nFinal Score: "
+                    + tScore,
+                    "Congratulations!",
                     JOptionPane.OK_OPTION);
             btnRoll.setEnabled(false);
             btnStop.setEnabled(false);
