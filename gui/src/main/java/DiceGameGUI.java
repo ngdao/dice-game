@@ -81,7 +81,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel2.setBackground(new java.awt.Color(247, 227, 174));
 
         btnRoll.setText("ROLL");
         btnRoll.addActionListener(new java.awt.event.ActionListener() {
@@ -464,7 +464,12 @@ public class DiceGameGUI extends javax.swing.JFrame {
             +"4.The player will have the option to stop there and record "
                 + "their score or they can roll again to increase their total.\n" 
             +"5.The player can roll as many times as they want, but as soon "
-                + "as their cumulative rolls equal or exceed 23, the game is over."
+                + "as their cumulative rolls equal or exceed 23, the game is over.\n"
+            +"\n"
+            +"Special Rolls: \n"
+            +"1.Three of a kind: 3 identical dice (bonus 15) \n"
+            +"2.Consecutive: dice values are consecutive regardless of their order"
+                    + " (bonus 10)"
             ,"Instruction",JOptionPane.OK_OPTION,listIcon.get(5));
     }//GEN-LAST:event_btnInstrActionPerformed
 
