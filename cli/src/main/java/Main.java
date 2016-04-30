@@ -151,20 +151,20 @@ public class Main {
         LeaderboardEntry[] leaders = stats.getLeaderboard();
         
         //Header
-        System.out.println("\n- High Scores -");
-        System.out.printf("%-20s %-20s %-20s%n",
+        System.out.println("\n- High Scores (Top 10) -");
+        System.out.printf("%-9s %-9s %-9s%n",
                           "Rank",
                           "Score",
                           "Name");
             
-        //Data
+        //Displays the top 10 leaders
         int rank = 1;
-        System.out.println("Length: " + leaders.length);
-        for (LeaderboardEntry leader : leaders) {
-            System.out.printf("%-20d %-20s %-20s%n",
+        while (rank <= leaders.length && rank <= 10) {
+            int index = rank - 1;
+            System.out.printf("%-9d %-9d %-9s%n",
                               rank,
-                              leader.getHighestScore(),
-                              leader.getPlayerName());
+                              leaders[index].getHighestScore(),
+                              leaders[index].getPlayerName());
             
             rank++;
         }
@@ -264,14 +264,14 @@ public class Main {
      */
     public static void displayStatistics(StatsData stats) {
         //Display headers
-        System.out.printf("%-20s %-20s %-20s %-20s %-20s%n",
+        System.out.printf("%-12s %-20s %-20s %-12s %-20s%n",
                           "Total Rolls",
                           "Avg Rolls Per Game",
                           "Cumulative Score",
                           "Avg Score",
                           "Avg # Of Dice Used");
         //Display data
-        System.out.printf("%-20s %-20s %-20s %-20s %-20s%n",
+        System.out.printf("%-12d %-20.2f %-20d %-12.2f %-20.2f%n",
                           stats.getTotalRolls(),
                           stats.getAvgRollsPerGame(),
                           stats.getCumulativeScore(),
@@ -361,6 +361,6 @@ public class Main {
             }
         } while (invalidInitials);
 
-        return input;
+        return input.toUpperCase();
     }
 }
