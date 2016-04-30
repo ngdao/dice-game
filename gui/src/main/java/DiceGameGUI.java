@@ -69,7 +69,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
         btnReset = new javax.swing.JButton();
         btnPStat = new javax.swing.JButton();
         btnOStat = new javax.swing.JButton();
-        btnOStat1 = new javax.swing.JButton();
+        btnLeaderBoard = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -118,6 +118,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
             }
         });
 
+        btnInstr.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnInstr.setText("Instruction");
         btnInstr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,13 +129,13 @@ public class DiceGameGUI extends javax.swing.JFrame {
         lblPlayerName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPlayerName.setText("Player's Name");
 
-        picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie1.setEnabled(false);
 
-        picDie2.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie2.setEnabled(false);
 
-        picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
+        picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/die_face_6.png"))); // NOI18N
         picDie3.setEnabled(false);
 
         btnReset.setText("RESET");
@@ -160,11 +161,11 @@ public class DiceGameGUI extends javax.swing.JFrame {
             }
         });
 
-        btnOStat1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        btnOStat1.setText("LEADER BOARD");
-        btnOStat1.addActionListener(new java.awt.event.ActionListener() {
+        btnLeaderBoard.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnLeaderBoard.setText("LEADER BOARD");
+        btnLeaderBoard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOStat1ActionPerformed(evt);
+                btnLeaderBoardActionPerformed(evt);
             }
         });
 
@@ -211,7 +212,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(btnOStat, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnOStat1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnLeaderBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(btnRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -254,7 +255,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPStat, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOStat, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOStat1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLeaderBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnClose)
                 .addContainerGap())
@@ -297,7 +298,6 @@ public class DiceGameGUI extends javax.swing.JFrame {
         }
         lblRollScore.setText("0");
         lblTotalScore.setText("0");
-        txtDiceNumber.setText("");
         btnRoll.setEnabled(true);
         picDie1.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
         picDie1.setEnabled(false);
@@ -313,26 +313,38 @@ public class DiceGameGUI extends javax.swing.JFrame {
 // TODO add your handling code here:
         int diceNumber = Integer.parseInt(txtDiceNumber.getText());
         RollResult rScore = new RollResult();
+        int tScore;
+        
         try{rScore = thisGame.roll(diceNumber);} 
         catch (RollAfterGameOverException ex)
         {ex.getStackTrace();}
-        Integer tScore = thisGame.getScore();
+        tScore = thisGame.getScore();
         lblRollScore.setText(""+rScore.sum());
-        lblTotalScore.setText(tScore.toString());
+        lblTotalScore.setText(""+ tScore);
         txtDiceNumber.setEnabled(true);
         
         for (int index = 0; index < rScore.rollCount(); index++)
         {
             int dieValue = rScore.rollsArray()[index];
-            if(dieValue == 0)
-                listLbl.get(index).setIcon(listIcon.get(5));
-            else
-               listLbl.get(index).setIcon(listIcon.get(dieValue-1));
+            listLbl.get(index).setIcon(listIcon.get(dieValue-1));
         }
         
-        if (thisGame.getCurrentTotal() >= 23){
-            JOptionPane.showMessageDialog(null, "Game Over!", "Game Over",
-            JOptionPane.OK_OPTION);
+        if (thisGame.getCurrentTotal() > 23){
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Game Over! You went over 23 by " 
+                            + (thisGame.getCurrentTotal()-23),
+                    "Game Over!",
+                    JOptionPane.OK_OPTION);
+            btnRoll.setEnabled(false);
+            btnStop.setEnabled(false);
+        }
+        else if (thisGame.getCurrentTotal() == 23){
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Congratulation! You hit 23!!!",
+                    "Game Over!",
+                    JOptionPane.OK_OPTION);
             btnRoll.setEnabled(false);
             btnStop.setEnabled(false);
         }
@@ -357,8 +369,11 @@ public class DiceGameGUI extends javax.swing.JFrame {
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please enter a number from 1-3", "Invalid Input",
-            JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Please enter a number from 1-3",
+                    "Invalid Input",
+                    JOptionPane.OK_OPTION);
         }
     }//GEN-LAST:event_btnRollActionPerformed
 
@@ -382,7 +397,7 @@ public class DiceGameGUI extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(null, "Invalid Input, must contain 3 alpha characters!", "Invalid Input",
                JOptionPane.OK_OPTION);
        } while (name.length() != 3 || !name.matches("[a-zA-Z]+"));
-       
+       name = name.toUpperCase();
        try {
          thisGame = DiceGame.create(name);
        } catch(InvalidUsernameException ex) {
@@ -396,22 +411,22 @@ public class DiceGameGUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, 
             "Goal of the game: \n"
             + "The goal of the game is to accumulate a total of exactly 23,"
-            + " or get as close as you can without going over, by rolling\n"
+                + " or get as close as you can without going over, by rolling\n"
             + "1-3 dice an unlimited amount of times. You will have the "
-            + "choice to use 1, 2, or 3 dice to increase your\n "
+                + "choice to use 1, 2, or 3 dice to increase your\n "
             + "overall total and achieve the goal of 23.\n"
             + "\n"
             + "Rules of the Game:\n"
             + "1.The player must enter three letters, generally "
-            + "initials, for their game name.\n" 
+                + "initials, for their game name.\n" 
             +"2.The player can choose the number of dice to use per roll.\n" 
             +"3.The player must roll the chosen number of dice and add the "
                     + "die faces to get a total.\n" 
             +"    For example, if you roll a 5, 6, and 3, your total will be 14.\n" 
             +"4.The player will have the option to stop there and record "
-            + "their score or they can roll again to increase their total.\n" 
+                + "their score or they can roll again to increase their total.\n" 
             +"5.The player can roll as many times as they want, but as soon "
-            + "as their cumulative rolls equal or exceed 23, the game is over."
+                + "as their cumulative rolls equal or exceed 23, the game is over."
             ,"Instruction",JOptionPane.OK_OPTION,listIcon.get(5));
     }//GEN-LAST:event_btnInstrActionPerformed
 
@@ -426,9 +441,33 @@ public class DiceGameGUI extends javax.swing.JFrame {
        displayUserStat(targetUser);
     }//GEN-LAST:event_btnOStatActionPerformed
 
-    private void btnOStat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOStat1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnOStat1ActionPerformed
+    private void btnLeaderBoardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeaderBoardActionPerformed
+        LeaderboardEntry[] lbe = stat.getLeaderboard();
+        Object[][] data = new Object[lbe.length][3];
+        String[] columnNames = {"#","Player's Initial", "Highest Score"};
+        
+        for (int row = 0; row < lbe.length; row++)
+        {
+            data[row][0] = row+1;
+            data[row][1] = lbe[row].getPlayerName();
+            data[row][2] = lbe[row].getHighestScore();
+        }
+        
+        JTable tblLeaderboard = new JTable(data,columnNames);
+        tblLeaderboard.enableInputMethods(false);
+        tblLeaderboard.getColumnModel().getColumn(0).setMaxWidth(20);
+        tblLeaderboard.setFont(new Font("Tahoma", 1,13));
+        
+        JScrollPane spnLeaderboard = new JScrollPane(tblLeaderboard);
+        spnLeaderboard.setPreferredSize(new Dimension(500,200));
+        JOptionPane.showMessageDialog(
+                null,
+                spnLeaderboard,
+                "Leaderboard",
+                JOptionPane.PLAIN_MESSAGE,
+                null);
+        
+    }//GEN-LAST:event_btnLeaderBoardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -496,25 +535,25 @@ public class DiceGameGUI extends javax.swing.JFrame {
     public void displayUserStat(String username)
     {
        StatsData thisPlayerStat = stat.getPlayerStats(username);
-       JTextArea txaStat = new JTextArea();
-       txaStat.setEditable(false);
-       txaStat.setFont(new Font("Sans-Serif", Font.PLAIN, 10));
-       txaStat.setText(
-               "Cumulative score:"+"                "
-                       + thisPlayerStat.getCumulativeScore() + "\n"
-              +"Average score:"+"                   "
-                       + thisPlayerStat.getAvgScore() + "\n"
-              +"Average number of dice used:"+"     " 
-                       + thisPlayerStat.getAvgNumDiceUsed() +"\n"
-              +"Total Roll:"+"                      "
-                       + thisPlayerStat.getTotalRolls() + "\n"
-              +"Average rolls per game:"+"          "
-                       + thisPlayerStat.getAvgRollsPerGame() + "\n");
-       txaStat.setBackground(Color.white);
-       txaStat.setForeground(Color.black);
-       JScrollPane spnStat = new JScrollPane(txaStat);
+       JTable tblStat;
+       Object[][] data = 
+       {
+        {"Cumulative score:",thisPlayerStat.getCumulativeScore()},
+        {"Average score:",thisPlayerStat.getAvgScore()},
+        {"Average number of dice used:",thisPlayerStat.getAvgNumDiceUsed()},
+        {"Total Roll:",thisPlayerStat.getTotalRolls()},
+        {"Average rolls per game:",thisPlayerStat.getAvgRollsPerGame()}
+       };
+       
+       tblStat = new JTable(data, new Object[]{"",""});
+       tblStat.getColumnModel().getColumn(0).setPreferredWidth(170);
+       
+       JScrollPane spnStat = new JScrollPane(tblStat);
        spnStat.setPreferredSize(new Dimension(350, 150));
-       JOptionPane.showMessageDialog(this, spnStat, "Your Statistic",JOptionPane.PLAIN_MESSAGE,null);
+       JOptionPane.showMessageDialog(this, 
+              spnStat,
+              username+"'s Statistic",
+              JOptionPane.PLAIN_MESSAGE,null);
     }
     
     public void dieAnimation(int diceNumber)
@@ -528,8 +567,8 @@ public class DiceGameGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnInstr;
+    private javax.swing.JButton btnLeaderBoard;
     private javax.swing.JButton btnOStat;
-    private javax.swing.JButton btnOStat1;
     private javax.swing.JButton btnPStat;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnRoll;
