@@ -1,18 +1,11 @@
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.*;
 import dice.*;
 /**
- *
+ *GUI for the Dice Game team project
  * @author Nguyen
  */
 public class DiceGameGUI extends javax.swing.JFrame {
@@ -25,6 +18,9 @@ public class DiceGameGUI extends javax.swing.JFrame {
         initVar();
     }
     
+    /*
+    Initialize the components
+    */
     private void initVar(){
         listLbl = new ArrayList<>();
         listLbl.add(picDie1);
@@ -299,8 +295,13 @@ public class DiceGameGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+    Reset button ActionPerformed event code:
+        Show end game message if haven't already
+        Create a new game with the same username
+        Set dice images and score labels to default
+    */
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        // TODO add your handling code here:
         String name = lblPlayerName.getText();
 
         try {
@@ -329,7 +330,11 @@ public class DiceGameGUI extends javax.swing.JFrame {
         picDie3.setIcon(new javax.swing.ImageIcon(getClass().getResource("die_face_6.png"))); // NOI18N
         picDie3.setEnabled(false);
     }//GEN-LAST:event_btnResetActionPerformed
-
+    
+    /*
+    Stop button ActionPerformed event code:
+        
+    */
     private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
 // TODO add your handling code here:
         int diceNumber = Integer.parseInt(txtDiceNumber.getText());
