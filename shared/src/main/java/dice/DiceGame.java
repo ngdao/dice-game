@@ -3,16 +3,20 @@ package dice;
 
 public class DiceGame {
     private static final int MAX_TOTAL = 23;
-
+    public static final int THREE_OF_A_KIND_BONUS = 15;
+    public static final int CONSECUTIVE_ROLL_BONUS = 10;
+    
     private Die die;
     private String username;
     private int currentTotal;
+    private int currentScore;
     private int gameId;
     private Database database;
 
     private DiceGame(String username, Database database) {
         this.username = username;
         currentTotal = 0;
+        currentScore = 0;
         die = new Die();
         this.database = database;
         this.gameId = -1;
@@ -49,7 +53,9 @@ public class DiceGame {
         }
 
         currentTotal += result.sum();
-
+        
+        updateScore(result);
+        
         if (gameId == -1) {
             gameId = getNextGameId();
         }
@@ -61,27 +67,34 @@ public class DiceGame {
 
         return result;
     }
-
+    
+    private void updateScore(RollResult result){
+         switch (result.getSpecialRollCode())
+        {
+            case 1:
+                currentScore += THREE_OF_A_KIND_BONUS + result.sum();
+                break;
+            case 2:
+                currentScore += CONSECUTIVE_ROLL_BONUS + result.sum();
+                break;
+            default:
+                currentScore += result.sum();
+        }
+        
+        if (currentTotal > MAX_TOTAL) {
+            currentScore = 0;
+        }
+        else if (currentTotal == MAX_TOTAL) {
+           currentScore *= 2;
+        }
+    }
+    
     public int getCurrentTotal() {
         return currentTotal;
     }
 
     public int getScore() {
-        int score;
-
-        int currentTotal = getCurrentTotal();
-
-        if (currentTotal > MAX_TOTAL) {
-            score = 0;
-        }
-        else if (currentTotal == MAX_TOTAL) {
-            score = 2 * MAX_TOTAL;
-        }
-        else {
-            score = currentTotal;
-        }
-
-        return score;
+        return currentScore;
     }
 
     public String getUsername() {
